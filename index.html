@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raksha Bandhan Wishes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text-dark: #333;
+            --green-gradient-start: #25D366;
+            --green-gradient-end: #128C7E;
+        }
+        /* Full screen layout for all phones */
+        html, body {
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            overflow: hidden; font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: url('background.gif') no-repeat center center/cover;
+            position: relative;
+        }
+        #main-container {
+            width: 100%; height: 100%; overflow-y: auto; padding: 20px;
+            box-sizing: border-box; background: rgba(0, 0, 0, 0.25);
+            text-align: center; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+        }
+        #main-container::-webkit-scrollbar { display: none; }
+        #fireworks-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 10;
+        }
+        .firework {
+            position: absolute; bottom: 0; left: var(--x-pos, 50%);
+            width: 3px; height: 3px; background: gold; border-radius: 50%;
+            opacity: 0; animation: shoot 3s ease-in infinite;
+            animation-delay: var(--delay, 0s);
+        }
+        @keyframes shoot {
+            0% { transform: translateY(0); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-90vh); opacity: 0; }
+        }
+        .firework::before {
+            content: ''; position: absolute; left: 50%; top: 100%;
+            width: 100%; height: 20px;
+            background: linear-gradient(to top, gold, transparent);
+            transform: translateX(-50%);
+        }
+        .firework .explosion {
+            position: absolute; left: 0; top: 0; width: 3px; height: 3px;
+            opacity: 0; animation: explode 1s ease-out infinite;
+            animation-delay: calc(3s + var(--delay, 0s) - 0.2s);
+        }
+        @keyframes explode {
+            0% { opacity: 1; transform: scale(0.5); }
+            100% { opacity: 0; transform: scale(2.5); }
+        }
+        .explosion .particle {
+            position: absolute; width: 4px; height: 4px;
+            background: var(--color, #FFF); border-radius: 50%;
+            top: 0; left: 0; opacity: 0;
+            animation: move-particle 1s ease-out infinite;
+            animation-delay: calc(3s + var(--delay, 0s) - 0.2s);
+        }
+        @keyframes move-particle {
+            0% { transform: rotate(var(--angle)) translateY(0); opacity: 1; }
+            100% { transform: rotate(var(--angle)) translateY(100px); opacity: 0; }
+        }
+        .content-section {
+            width: 100%; max-width: 400px; z-index: 20; position: relative;
+        }
+        .input-group { margin-bottom: 20px; }
+        .input-field {
+            width: 100%; padding: 16px; box-sizing: border-box;
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 50px;
+            background: rgba(255, 255, 255, 0.8); color: var(--text-dark);
+            font-size: 1rem; transition: all 0.3s ease;
+        }
+        .input-field::placeholder { color: #555; font-weight: bold; }
+        .input-field:focus {
+            outline: none; border-color: var(--green-gradient-start);
+            box-shadow: 0 0 10px rgba(37, 211, 102, 0.5);
+        }
+        .action-button {
+            padding: 16px 35px; border: none; border-radius: 50px;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer; color: #fff;
+            background: linear-gradient(45deg, #ff3333, #ff6b6b);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease-in-out;
+        }
+        .action-button:hover {
+            transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+        #createWishBtn, #showFormBtn {
+            background: linear-gradient(45deg, var(--green-gradient-start), var(--green-gradient-end));
+        }
+        #greetingCard, #createdCard {
+            display: none; margin-bottom: 20px; padding: 25px;
+            border-radius: 20px; background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.1); color: var(--text-dark);
+        }
+        #greetingMessage, #createdMessage {
+            font-size: clamp(1.1rem, 4vw, 1.3rem); line-height: 1.7; font-weight: bold;
+        }
+        #shareBtn, #showFormBtn {
+            display: none; margin-top: 25px;
+        }
+
+        /* --- नई CSS स्टाइलिंग --- */
+        .name-style {
+            color: var(--green-gradient-start); /* हरा रंग */
+            text-transform: uppercase; /* कैपिटल लेटर्स */
+            font-weight: 700; /* थोड़ा और मोटा */
+            text-shadow: 1px 1px 3px black, 0 0 5px rgba(0,0,0,0.7); /* काला ग्लो */
+        }
+
+        .wish-style {
+            color: #FFD700; /* पीला रंग */
+            text-shadow: 1px 1px 3px black, 0 0 5px rgba(0,0,0,0.7); /* काला ग्लो */
+        }
+        /* --- विज्ञापन का स्टाइल --- */
+        #ad-container-bottom {
+            position: fixed; bottom: 0; left: 0; width: 100%; z-index: 100;
+            display: flex; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.5); padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="fireworks-container"></div>
+    <div id="main-container">
+        <div id="greetingCard" class="content-section">
+            <p id="greetingMessage"></p>
+        </div>
+        
+        <button id="showFormBtn" class="action-button">अपनी शुभकामनाएं बनाएं</button>
+
+        <div id="userInputSection" class="content-section">
+            <div class="input-group">
+                <input type="text" id="senderName" class="input-field" placeholder="अपना नाम लिखें" required>
+            </div>
+            <div class="input-group">
+                <input type="text" id="siblingName" class="input-field" placeholder="भाई/बहन का नाम (वैकल्पिक)">
+            </div>
+            <button id="createWishBtn" class="action-button">शुभकामनाएं बनाएं</button>
+        </div>
+
+        <div id="createdCard" class="content-section">
+             <p id="createdMessage"></p>
+        </div>
+
+        <button id="shareBtn" class="action-button">व्हाट्सएप पर भेजें</button>
+    </div>
+    
+    <!-- विज्ञापन का कोड जैसा है वैसा ही रहेगा -->
+    <div id="ad-container-bottom">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '6e22f960c9a23b31b53de02622898800',
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/6e22f960c9a23b31b53de02622898800/invoke.js"></script>
+    </div>
+
+    <audio id="bgMusic" src="song.mp3" loop></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const createWishBtn = document.getElementById('createWishBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const greetingCard = document.getElementById('greetingCard');
+            const greetingMessage = document.getElementById('greetingMessage');
+            const createdCard = document.getElementById('createdCard');
+            const createdMessage = document.getElementById('createdMessage');
+            const senderNameInput = document.getElementById('senderName');
+            const siblingNameInput = document.getElementById('siblingName');
+            const userInputSection = document.getElementById('userInputSection');
+            const bgMusic = document.getElementById('bgMusic');
+            const showFormBtn = document.getElementById('showFormBtn');
+            let hasInteracted = false;
+            
+            // आतिशबाज़ी का लॉजिक (कोई बदलाव नहीं)
+            const fireworksContainer = document.getElementById('fireworks-container');
+            const numFireworks = 5;
+            const colors = ['#FFD700', '#FF4500', '#ADFF2F', '#FF69B4', '#00FFFF', '#FFF'];
+            for (let i = 0; i < numFireworks; i++) {
+                const firework = document.createElement('div'); firework.className = 'firework';
+                const duration = 2.5 + Math.random() * 2;
+                firework.style.setProperty('--x-pos', (15 + Math.random() * 70) + '%');
+                firework.style.setProperty('--delay', (Math.random() * duration) + 's');
+                const explosion = document.createElement('div'); explosion.className = 'explosion';
+                const numParticles = 25;
+                for(let j = 0; j < numParticles; j++) {
+                    const particle = document.createElement('div'); particle.className = 'particle';
+                    particle.style.setProperty('--angle', (360 / numParticles * j) + 'deg');
+                    particle.style.setProperty('--color', colors[Math.floor(Math.random() * colors.length)]);
+                    explosion.appendChild(particle);
+                }
+                firework.appendChild(explosion); fireworksContainer.appendChild(firework);
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const fromName = urlParams.get('from');
+            const toName = urlParams.get('to');
+
+            if (fromName) {
+                // --- स्टाइल के साथ संदेश बनाने के लिए जावास्क्रिप्ट में बदलाव ---
+                const sender = decodeURIComponent(fromName.replace(/\+/g, ' ')).toUpperCase();
+                const sibling = toName ? decodeURIComponent(toName.replace(/\+/g, ' ')).toUpperCase() : null;
+                let message;
+
+                if (sibling) {
+                    message = `यह संदेश <span class="name-style">${sender}</span> की तरफ से <span class="name-style">${sibling}</span> के लिए है:<br><br><span class="wish-style">"तुम्हें ढेर सारा प्यार और हमेशा रक्षा करने का वादा। रक्षा बंधन की बहुत-बहुत शुभकामनाएं!"</span>`;
+                } else {
+                    message = `<span class="name-style">${sender}</span> की तरफ से <span class="wish-style">आपको रक्षा बंधन की बहुत-बहुत शुभकामनाएं!</span>`;
+                }
+                greetingMessage.innerHTML = message; // innerHTML का उपयोग करें
+                greetingCard.style.display = 'block';
+                userInputSection.style.display = 'none';
+                showFormBtn.style.display = 'inline-block';
+            } else {
+                userInputSection.style.display = 'block';
+                greetingCard.style.display = 'none';
+                showFormBtn.style.display = 'none';
+            }
+
+            const playMusic = () => { if(bgMusic.paused) { bgMusic.play().catch(e => {}); } };
+            const startMusicOnInteraction = () => { if(hasInteracted) return; hasInteracted = true; playMusic(); document.body.removeEventListener('click', startMusicOnInteraction); document.body.removeEventListener('touchstart', startMusicOnInteraction); };
+            document.body.addEventListener('click', startMusicOnInteraction);
+            document.body.addEventListener('touchstart', startMusicOnInteraction);
+            
+            showFormBtn.addEventListener('click', () => {
+                greetingCard.style.display = 'none';
+                showFormBtn.style.display = 'none';
+                userInputSection.style.display = 'block';
+                userInputSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+
+            createWishBtn.addEventListener('click', () => {
+                // --- स्टाइल के साथ संदेश बनाने के लिए जावास्क्रिप्ट में बदलाव ---
+                const senderName = senderNameInput.value.trim();
+                const siblingName = siblingNameInput.value.trim();
+                if (!senderName) { alert('कृपया अपना नाम लिखें!'); return; }
+                
+                let message;
+                const formattedSender = `<span class="name-style">${senderName.toUpperCase()}</span>`;
+                
+                if(siblingName){
+                    const formattedSibling = `<span class="name-style">${siblingName.toUpperCase()}</span>`;
+                    message = `प्यारे ${formattedSibling},<br><br>${formattedSender} की तरफ से <span class="wish-style">आपको रक्षा बंधन की ढेर सारी शुभकामनाएं! यह त्यौहार हमारे प्यार के बंधन को और भी मजबूत करे।</span>`;
+                } else {
+                    message = `${formattedSender} की तरफ से <span class="wish-style">आपको रक्षा बंधन की बहुत-बहुत शुभकामनाएं!</span>`;
+                }
+                
+                userInputSection.style.display = 'none';
+                createdMessage.innerHTML = message; // innerHTML का उपयोग करें
+                createdCard.style.display = 'block';
+                shareBtn.style.display = 'inline-block';
+
+                setTimeout(() => {
+                    shareBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            });
+
+            shareBtn.addEventListener('click', async () => {
+                const senderName = senderNameInput.value.trim();
+                const siblingName = siblingNameInput.value.trim();
+                if (!senderName) { alert('शेयर करने के लिए कृपया अपना नाम लिखें!'); return; }
+
+                const baseUrl = window.location.origin + window.location.pathname;
+                let shareUrl = `${baseUrl}?from=${encodeURIComponent(senderName)}`;
+                if (siblingName) { shareUrl += `&to=${encodeURIComponent(siblingName)}`; }
+                const shareText = `💖 ${senderName.toUpperCase()} ने आपके लिए रक्षा बंधन का एक खास संदेश भेजा है! देखने के लिए लिंक पर क्लिक करें:`;
+
+                if (navigator.share) {
+                    try { await navigator.share({ title: 'रक्षा बंधन की शुभकामनाएं!', text: shareText, url: shareUrl }); } catch (err) {}
+                } else {
+                    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + "\n\n" + shareUrl)}`, '_blank');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
